@@ -74,11 +74,8 @@
 
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary" [disabled]="bookForm.invalid">
-            {{ editingBookId ? 'Update Book' : 'Add Book' }}
+            Add Book
           </button>
-          @if (editingBookId) {
-            <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancel</button>
-          }
         </div>
       </form>
     </div>
@@ -110,10 +107,7 @@
                 <td class="align-middle">₱{{ book.price }}</td>
                 <td class="align-middle">{{ book.year || 'N/A' }}</td>
                 <td class="text-end align-middle">
-                  <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-primary" (click)="editBook(book)">Edit</button>
-                    <button class="btn btn-outline-danger" (click)="deleteBook(book.id)">Delete</button>
-                  </div>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteBook(book.id)">Delete</button>
                 </td>
               </tr>
             } @empty {

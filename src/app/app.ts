@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
   readonly APIUrl="http://localhost:5038/api/books/";
 
   bookForm!: FormGroup;
-  editingBookId: string | null = null;
   books: any = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) { }
@@ -55,37 +54,14 @@ export class AppComponent implements OnInit {
     formData.append("author", this.bookForm.value.author);
     formData.append("year", this.bookForm.value.year.toString());
 
-    if (this.editingBookId) {
-      // Edit mode
-      formData.append("id", this.editingBookId);
-      this.http.put(this.APIUrl + 'UpdateBook?id=' + this.editingBookId, formData).subscribe(data => {
-        alert(data);
-        this.resetForm();
-        this.refreshBooks();
-      });
-    } else {
-      // Add mode
-      this.http.post(this.APIUrl + 'AddBook', formData).subscribe(data => {
-        alert(data);
-        this.resetForm();
-        this.refreshBooks();
-      });
-    }
-  }
-
-  editBook(book: any) {
-    this.editingBookId = book.id;
-    this.bookForm.patchValue({
-      title: book.title,
-      description: book.desc,
-      price: book.price,
-      author: book.author || '',
-      year: book.year || ''
+    this.http.post(this.APIUrl + 'AddBook', formData).subscribe(data => {
+      alert(data);
+      this.resetForm();
+      this.refreshBooks();
     });
   }
 
   resetForm() {
-    this.editingBookId = null;
     this.bookForm.reset();
   }
 
